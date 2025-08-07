@@ -93,6 +93,7 @@ export function DashboardPage() {
   }
 
   const handleUpdateSavingsGoal = async (id: string, updates: Partial<SavingsGoal>) => {
+
     const result = await savingsService.updateSavingsGoal(id, updates)
     if (result) {
       setSavingsGoals(savingsGoals.map(goal => 
