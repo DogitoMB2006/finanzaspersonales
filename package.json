@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "description": "Aplicación para gestionar finanzas personales",
-  "author": "JesusReyes",
+  "author": "Jesusreyes",
   "type": "module",
   "main": "dist-electron/main/main.js",
   "homepage": "./",
@@ -70,7 +70,8 @@
           "arch": ["x64"]
         }
       ],
-      "icon": "public/vite.svg"
+      "icon": "public/vite.svg",
+      "executableName": "FinanzasPersonales"
     },
     "mac": {
       "target": [
