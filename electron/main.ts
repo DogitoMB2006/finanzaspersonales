@@ -15,10 +15,15 @@ process.env.VITE_PUBLIC = VITE_DEV_SERVER_URL ? path.join(process.env.APP_ROOT, 
 let win: BrowserWindow | null = null
 
 function createWindow() {
+  // Determinar la ruta correcta del preload según el entorno
+  const preloadPath = app.isPackaged 
+    ? path.join(__dirname, '../preload/preload.js')
+    : path.join(__dirname, 'preload.js')
+
   win = new BrowserWindow({
-    icon: process.env.VITE_PUBLIC ? path.join(process.env.VITE_PUBLIC, 'vite.svg') : undefined,
+    // Removido el icono por ahora
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
+      preload: preloadPath,
       nodeIntegration: false,
       contextIsolation: true,
     },

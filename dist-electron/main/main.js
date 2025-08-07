@@ -1,16 +1,17 @@
-import { app as o, BrowserWindow as i } from "electron";
-import { fileURLToPath as d } from "node:url";
-import n from "node:path";
-const s = n.dirname(d(import.meta.url));
-process.env.APP_ROOT = n.join(s, "..");
-const t = process.env.VITE_DEV_SERVER_URL, w = n.join(process.env.APP_ROOT, "dist-electron"), r = n.join(process.env.APP_ROOT, "dist");
-process.env.VITE_PUBLIC = t ? n.join(process.env.APP_ROOT, "public") : r;
+import { app as n, BrowserWindow as r } from "electron";
+import { fileURLToPath as p } from "node:url";
+import o from "node:path";
+const t = o.dirname(p(import.meta.url));
+process.env.APP_ROOT = o.join(t, "..");
+const i = process.env.VITE_DEV_SERVER_URL, m = o.join(process.env.APP_ROOT, "dist-electron"), s = o.join(process.env.APP_ROOT, "dist");
+process.env.VITE_PUBLIC = i ? o.join(process.env.APP_ROOT, "public") : s;
 let e = null;
 function l() {
-  e = new i({
-    icon: process.env.VITE_PUBLIC ? n.join(process.env.VITE_PUBLIC, "vite.svg") : void 0,
+  const a = n.isPackaged ? o.join(t, "../preload/preload.js") : o.join(t, "preload.js");
+  e = new r({
+    // Removido el icono por ahora
     webPreferences: {
-      preload: n.join(s, "preload.js"),
+      preload: a,
       nodeIntegration: !1,
       contextIsolation: !0
     },
@@ -23,19 +24,19 @@ function l() {
       color: "#1f2937",
       symbolColor: "#ffffff"
     }
-  }), t ? (e.loadURL(t), e.webContents.openDevTools()) : e.loadFile(n.join(r, "index.html")), e.webContents.on("did-finish-load", () => {
+  }), i ? (e.loadURL(i), e.webContents.openDevTools()) : e.loadFile(o.join(s, "index.html")), e.webContents.on("did-finish-load", () => {
     e?.webContents.send("main-process-message", (/* @__PURE__ */ new Date()).toLocaleString());
-  }), e.webContents.setWindowOpenHandler(({ url: a }) => (require("electron").shell.openExternal(a), { action: "deny" }));
+  }), e.webContents.setWindowOpenHandler(({ url: d }) => (require("electron").shell.openExternal(d), { action: "deny" }));
 }
-o.whenReady().then(l);
-o.on("window-all-closed", () => {
-  process.platform !== "darwin" && (o.quit(), e = null);
+n.whenReady().then(l);
+n.on("window-all-closed", () => {
+  process.platform !== "darwin" && (n.quit(), e = null);
 });
-o.on("activate", () => {
-  i.getAllWindows().length === 0 && l();
+n.on("activate", () => {
+  r.getAllWindows().length === 0 && l();
 });
 export {
-  w as MAIN_DIST,
-  r as RENDERER_DIST,
-  t as VITE_DEV_SERVER_URL
+  m as MAIN_DIST,
+  s as RENDERER_DIST,
+  i as VITE_DEV_SERVER_URL
 };
