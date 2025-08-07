@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "description": "Aplicación para gestionar finanzas personales",
-  "author": "Jesusreyes",
+  "author": "Tu Nombre",
   "type": "module",
   "main": "dist-electron/main/main.js",
   "homepage": "./",
