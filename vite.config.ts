@@ -12,7 +12,7 @@ export default defineConfig({
     react(),
     electron([
       {
-        entry: 'electron/main.ts',
+        entry: 'electron/main.js',
         onstart(args) {
           if (process.env.VSCODE_DEBUG) {
             console.log('[startup] Electron App')
@@ -23,23 +23,26 @@ export default defineConfig({
         vite: {
           build: {
             sourcemap: false,
-            minify: process.env.NODE_ENV === 'production',
+            minify: false,
             outDir: 'dist-electron/main',
             rollupOptions: {
               external: ['electron'],
+              output: {
+                format: 'cjs'
+              }
             },
           },
         },
       },
       {
-        entry: 'electron/preload.ts',
+        entry: 'electron/preload.js',
         onstart(args) {
           args.reload()
         },
         vite: {
           build: {
-            sourcemap: 'inline',
-            minify: process.env.NODE_ENV === 'production',
+            sourcemap: false,
+            minify: false,
             outDir: 'dist-electron/preload',
             rollupOptions: {
               external: ['electron'],

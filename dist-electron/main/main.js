@@ -1,42 +1,46 @@
-import { app as n, BrowserWindow as r } from "electron";
-import { fileURLToPath as p } from "node:url";
+import { app as n, BrowserWindow as s } from "electron";
+import { fileURLToPath as w } from "node:url";
 import o from "node:path";
-const t = o.dirname(p(import.meta.url));
-process.env.APP_ROOT = o.join(t, "..");
-const i = process.env.VITE_DEV_SERVER_URL, m = o.join(process.env.APP_ROOT, "dist-electron"), s = o.join(process.env.APP_ROOT, "dist");
-process.env.VITE_PUBLIC = i ? o.join(process.env.APP_ROOT, "public") : s;
+const l = o.dirname(w(import.meta.url));
+process.env.APP_ROOT = o.join(l, "..");
+const r = process.env.VITE_DEV_SERVER_URL, R = o.join(process.env.APP_ROOT, "dist-electron"), a = o.join(process.env.APP_ROOT, "dist");
+process.env.VITE_PUBLIC = r ? o.join(process.env.APP_ROOT, "public") : a;
 let e = null;
-function l() {
-  const a = n.isPackaged ? o.join(t, "../preload/preload.js") : o.join(t, "preload.js");
-  e = new r({
-    // Removido el icono por ahora
+function d() {
+  let i;
+  if (n.isPackaged ? i = o.join(process.resourcesPath, "app.asar", "dist-electron", "preload", "preload.js") : i = o.join(l, "../preload/preload.js"), console.log("Preload path:", i), e = new s({
     webPreferences: {
-      preload: a,
+      preload: i,
       nodeIntegration: !1,
-      contextIsolation: !0
+      contextIsolation: !0,
+      webSecurity: !0
     },
     width: 1200,
     height: 800,
     minWidth: 800,
     minHeight: 600,
-    titleBarStyle: "hidden",
-    titleBarOverlay: {
-      color: "#1f2937",
-      symbolColor: "#ffffff"
-    }
-  }), i ? (e.loadURL(i), e.webContents.openDevTools()) : e.loadFile(o.join(s, "index.html")), e.webContents.on("did-finish-load", () => {
-    e?.webContents.send("main-process-message", (/* @__PURE__ */ new Date()).toLocaleString());
-  }), e.webContents.setWindowOpenHandler(({ url: d }) => (require("electron").shell.openExternal(d), { action: "deny" }));
+    show: !1
+  }), e.once("ready-to-show", () => {
+    e?.show(), n.isPackaged || e?.webContents.openDevTools();
+  }), e.webContents.on("did-fail-load", (t, c, p) => {
+    console.error("Failed to load:", c, p);
+  }), r)
+    e.loadURL(r);
+  else {
+    const t = o.join(a, "index.html");
+    console.log("Loading file:", t), e.loadFile(t);
+  }
+  e.webContents.setWindowOpenHandler(({ url: t }) => (require("electron").shell.openExternal(t), { action: "deny" }));
 }
-n.whenReady().then(l);
+n.whenReady().then(d);
 n.on("window-all-closed", () => {
   process.platform !== "darwin" && (n.quit(), e = null);
 });
 n.on("activate", () => {
-  r.getAllWindows().length === 0 && l();
+  s.getAllWindows().length === 0 && d();
 });
 export {
-  m as MAIN_DIST,
-  s as RENDERER_DIST,
-  i as VITE_DEV_SERVER_URL
+  R as MAIN_DIST,
+  a as RENDERER_DIST,
+  r as VITE_DEV_SERVER_URL
 };

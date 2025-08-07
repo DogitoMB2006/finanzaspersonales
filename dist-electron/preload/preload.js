@@ -1,6 +1,5 @@
-import { contextBridge as r, ipcRenderer as n } from "electron";
-r.exposeInMainWorld("electronAPI", {
-  onUpdateCounter: (e) => n.on("update-counter", (t, o) => e(o)),
-  counterValue: (e) => n.invoke("counter-value", e)
+const { contextBridge, ipcRenderer } = require("electron");
+contextBridge.exposeInMainWorld("electronAPI", {
+  platform: process.platform,
+  versions: process.versions
 });
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicHJlbG9hZC5qcyIsInNvdXJjZXMiOlsiLi4vLi4vZWxlY3Ryb24vcHJlbG9hZC50cyJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBjb250ZXh0QnJpZGdlLCBpcGNSZW5kZXJlciB9IGZyb20gJ2VsZWN0cm9uJ1xyXG5cclxuY29udGV4dEJyaWRnZS5leHBvc2VJbk1haW5Xb3JsZCgnZWxlY3Ryb25BUEknLCB7XHJcbiAgb25VcGRhdGVDb3VudGVyOiAoY2FsbGJhY2s6ICh2YWx1ZTogbnVtYmVyKSA9PiB2b2lkKSA9PiBpcGNSZW5kZXJlci5vbigndXBkYXRlLWNvdW50ZXInLCAoX2V2ZW50LCB2YWx1ZSkgPT4gY2FsbGJhY2sodmFsdWUpKSxcclxuICBjb3VudGVyVmFsdWU6ICh2YWx1ZTogbnVtYmVyKSA9PiBpcGNSZW5kZXJlci5pbnZva2UoJ2NvdW50ZXItdmFsdWUnLCB2YWx1ZSksXHJcbn0pIl0sIm5hbWVzIjpbImNvbnRleHRCcmlkZ2UiLCJjYWxsYmFjayIsImlwY1JlbmRlcmVyIiwiX2V2ZW50IiwidmFsdWUiXSwibWFwcGluZ3MiOiI7QUFFQUEsRUFBYyxrQkFBa0IsZUFBZTtBQUFBLEVBQzdDLGlCQUFpQixDQUFDQyxNQUFzQ0MsRUFBWSxHQUFHLGtCQUFrQixDQUFDQyxHQUFRQyxNQUFVSCxFQUFTRyxDQUFLLENBQUM7QUFBQSxFQUMzSCxjQUFjLENBQUNBLE1BQWtCRixFQUFZLE9BQU8saUJBQWlCRSxDQUFLO0FBQzVFLENBQUM7In0=

@@ -1,7 +1,7 @@
 {
   "name": "finanzas-personales",
   "private": true,
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Aplicación para gestionar finanzas personales",
   "author": "Tu Nombre",
   "type": "module",
@@ -63,11 +63,8 @@
       "node_modules/**/*",
       "package.json"
     ],
-    "extraResources": [
-      {
-        "from": "dist-electron/preload",
-        "to": "preload"
-      }
+    "asarUnpack": [
+      "dist-electron/preload/**/*"
     ],
     "win": {
       "target": [
@@ -77,28 +74,6 @@
         }
       ],
       "executableName": "FinanzasPersonales"
-    },
-    "mac": {
-      "target": [
-        {
-          "target": "dmg",
-          "arch": ["x64", "arm64"]
-        }
-      ],
-      "category": "public.app-category.finance"
-    },
-    "linux": {
-      "target": [
-        {
-          "target": "AppImage",
-          "arch": ["x64"]
-        },
-        {
-          "target": "deb",
-          "arch": ["x64"]
-        }
-      ],
-      "category": "Office"
     },
     "nsis": {
       "oneClick": false,
